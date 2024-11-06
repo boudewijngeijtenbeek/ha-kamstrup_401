@@ -73,12 +73,24 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = coordinator
 
-    for platform in PLATFORMS:
-        if entry.options.get(platform, True):
-            await hass.async_add_job(
-                hass.config_entries.async_forward_entry_setup(entry, platform)
-            )
-
+    """ See https://developers.home-assistant.io/blog/2024/06/12/async_forward_entry_setups/ and https://developers.home-assistant.io/blog/2024/03/13/deprecate_add_run_job/
+        Simply removed the old for loop accross PLATFORMS with a single call. Assuming all entries in PLATFORMS are indeed platforms ... 
+        And switched out hass.async_add_job for hass.async_create_task
+        ...
+        Used https://github.com/home-assistant/example-custom-config/issues/45 for inspiration ...
+        ...
+        Old stuff that was removed:
+        ...
+        for platform in PLATFORMS:
+            if entry.options.get(platform, True):
+                await hass.async_add_job(
+                    hass.config_entries.async_forward_entry_setup(entry, platform)
+                )
+    """
+    await hass.async_create_task(
+        hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
+    )
+    
     await coordinator.async_config_entry_first_refresh()
 
     if not coordinator.last_update_success:
