@@ -1,0 +1,11 @@
+{
+  "domain": "kamstrup_401",
+  "name": "Kamstrup 401",
+  "documentation": "...",
+  "iot_class": "local_polling",
+  "issue_tracker": "...",
+  "version": "1.0.0",
+  "config_flow": true,
+  "codeowners": ["B"],
+  "requirements": ["pyserial==3.5"]
+}
