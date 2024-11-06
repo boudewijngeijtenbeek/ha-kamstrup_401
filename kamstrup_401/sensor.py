@@ -7,7 +7,8 @@ from homeassistant.components.sensor import (
     SensorStateClass,
 )
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import VOLUME_CUBIC_METERS
+#from homeassistant.const import VOLUME_CUBIC_METERS
+from homeassistant.const import UnitOfVolume
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
@@ -70,7 +71,8 @@ async def async_setup_entry(
                 key="gas",
                 name="Thermal Energy to Gas",
                 icon="mdi:gas-burner",
-                native_unit_of_measurement=VOLUME_CUBIC_METERS,
+                #native_unit_of_measurement=VOLUME_CUBIC_METERS,
+                native_unit_of_measurement=UnitOfVolume.CUBIC_METERS,
                 device_class=SensorDeviceClass.GAS,
                 state_class=SensorStateClass.TOTAL_INCREASING,
                 entity_registry_enabled_default=False,
